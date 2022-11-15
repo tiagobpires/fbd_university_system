@@ -62,9 +62,7 @@ def submenu_crud():
     )
 
     while True:
-        option = int(
-            input("Digite em qual entidade deseja realizar as operações do CRUD: ")
-        )
+        option = int(input("Digite qual operação deseja realizar: "))
 
         if option <= 1 and option >= 5:
             print("Opção inválida!\n")
@@ -128,3 +126,5 @@ def menu_crud(conn):
                 crud_address(conn, operation)
             case 2:
                 pass
+
+        break

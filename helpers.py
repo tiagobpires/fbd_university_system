@@ -1,4 +1,5 @@
 from textwrap import dedent
+from tabulate import tabulate
 
 
 def _treat_exception(conn, error):
@@ -10,7 +11,7 @@ def _treat_exception(conn, error):
         - error: erro gerado
     """
 
-    print(f"Problema ao realizar operação no banco de dados!\n{error}\n")
+    print(f"Problema ao realizar operação!\n{error}\n")
     if conn is not None:
         conn.close()
     print("Banco de dados desconectado!")
@@ -81,12 +82,65 @@ def crud_address(conn, operation):
 
         match operation:
             case 1:  # Inserção
-                pass
+                print("Insira as informações do Endereço\n")
+                street = input("Rua: ")
+                number = input("Número: ")
+                complement = input("Complemento: ")
+                cep = input("Cep: ")
+                state = input("Estado: ")
+                city = input("Cidade: ")
+
+                cur.execute(
+                    """
+                    INSERT INTO Endereço (rua, número, complemento, cep, estado, cidade)
+                    VALUES (%s, %s, %s, %s, %s, %s)
+                    """,
+                    (street, number, complement, cep, state, city),
+                )
+
+                conn.commit()
+                print(f"Endereço criado!\n")
+
             case 2:  # Visualização
-                pass
-            case 3:  # Visualização
-                pass
-            case 4:  # Visualização
+                cur.execute("""SELECT * FROM Endereço ORDER BY id_endereço""")
+                response = cur.fetchall()
+
+                columns = [
+                    "ID",
+                    "Rua",
+                    "Número",
+                    "Complemento",
+                    "CEP",
+                    "Estado",
+                    "Cidade",
+                ]
+                print(f"\n{len(response)} Resultados encontrados!\n")
+                print(tabulate(response, headers=columns, tablefmt="fancy_grid"))
+
+            case 3:  # Edição
+                id_address = int(input("Digite o ID do endereço a ser atualizado: "))
+
+                print("Insira as informações editadas do endereço\n")
+                street = input("Rua: ")
+                number = input("Número: ")
+                complement = input("Complemento: ")
+                cep = input("Cep: ")
+                state = input("Estado: ")
+                city = input("Cidade: ")
+
+                cur.execute(
+                    """
+                    UPDATE Endereço 
+                    SET rua = %s , número = %s, complemento = %s, cep = %s, estado = %s, cidade = %s
+                    WHERE id_endereço = %s
+                    """,
+                    (street, number, complement, cep, state, city, id_address),
+                )
+
+                conn.commit()
+                print(f"Endereço atualizado!\n")
+
+            case 4:  # Deleção
                 pass
 
         cur.close()
