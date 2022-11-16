@@ -1,5 +1,5 @@
 from textwrap import dedent
-from helpers import reset_database, crud_address
+from helpers import *
 
 
 def menu_principal(conn):
@@ -125,6 +125,16 @@ def menu_crud(conn):
             case 1:
                 crud_address(conn, operation)
             case 2:
-                pass
+                crud_student(conn, operation)
+            case 3:
+                crud_subject(conn, operation)
+            case 4:
+                crud_teacher(conn, operation)
+            case 5:
+                crud_teacher_subject(conn, operation)
+            case 6:
+                crud_teacher_dean(conn, operation)
+            case 7:
+                crud_local(conn, operation)
 
         break

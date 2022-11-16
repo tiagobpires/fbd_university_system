@@ -1,4 +1,3 @@
--- Professor
 
 INSERT INTO 
 Professor(data_nasc, nome, formação, email, sexo)
@@ -21,8 +20,6 @@ Professor(data_nasc, nome, formação, email, sexo)
 VALUES ('1941-02-07', 'Leslie Lamport', 'Doutor', 'lamport@ufc.br', 'Masculino');
 
 
--- Disciplina
-
 INSERT INTO 
 Disciplina(nome, carga_horária, ementa)
 VALUES ('Fundamento de Banco de Dados', '96', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
@@ -34,6 +31,7 @@ VALUES ('Linguagens de Programação','72','Lorem ipsum dolor sit amet, consecte
 INSERT INTO 
 Disciplina(nome, carga_horária, ementa)
 VALUES ('Compiladores','72','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum');
+
 
 INSERT INTO 
 Disciplina(nome, carga_horária, ementa)
@@ -48,7 +46,6 @@ Disciplina(nome, carga_horária, ementa)
 VALUES ('Segurança de Redes', '96', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
 
 
--- Professor_Disciplina
 
 INSERT INTO 
 Professor_Disciplina(id_profs, id_disciplina)
@@ -75,21 +72,15 @@ Professor_Disciplina(id_profs, id_disciplina)
 VALUES (4, 1);
 
 
--- Reitor
-
 INSERT INTO 
 Professor_Reitor(código_reitor, id_profs, data_admissão)
 VALUES (007, 4, '1990-10-02');
 
 
--- Município
-
 INSERT INTO 
 Município(nome)
 VALUES ('Fortaleza');
 
-
--- Campus
 
 INSERT INTO 
 Campus (nome, id_município, id_reitor)
@@ -104,8 +95,6 @@ Campus (nome, id_município, id_reitor)
 VALUES ('Porangabussu', 1, 007);
 
 
--- Centro
-
 INSERT INTO 
 Centro (nome, id_profs, id_campus)
 VALUES ('Ciências', 1, 1);
@@ -115,8 +104,6 @@ Centro (nome, id_profs, id_campus)
 VALUES ('Tecnologia', 2, 1);
 
 
--- Curso
-
 INSERT INTO 
 Curso (nome, carga_horaria, id_profs, id_centro)
 VALUES ('Computação', 3200, 3, 1);
@@ -125,8 +112,6 @@ INSERT INTO
 Curso (nome, carga_horaria, id_profs, id_centro)
 VALUES ('Biotecnologia', 3200, 4, 1);
 
-
--- Endereço
 
 INSERT INTO 
 Endereço (rua, número, complemento, cep, estado, cidade)
@@ -140,8 +125,6 @@ INSERT INTO
 Endereço (rua, número, complemento, cep, estado, cidade)
 VALUES  ('Rua Primeiro de Maio', '958', 'Em frente ao supermercado', '60540-455', 'CE', 'Fortaleza');
 
-
--- Aluno
 
 INSERT INTO 
 Aluno (matricula, data_nasc, email, sexo, nome, id_endereço, id_curso)
@@ -164,58 +147,52 @@ Aluno (matricula, data_nasc, email, sexo, nome, id_endereço, id_curso)
 VALUES ('52040', '2001-10-22', 'tiagobpires@ufc.br', 'Masculino', 'Tiago Barros Pires', 1, 1);
 
 
--- Local
 
 INSERT INTO local(
-	nome, "lotação", "descrição", id_centro)
-	VALUES ('Bloco 910', 1200, 'Bloco para alunos de ciências e engenharia da computação', 1);
+	nome, "lotação", "descrição", id_centro, tipo_local)
+	VALUES ('Bloco 910', 1200, 'Bloco para alunos de ciências e engenharia da computação', 1, 'Bloco');
 
 INSERT INTO local_bloco(
 	id_local)
 	VALUES (1);
 
 INSERT INTO local(
-	nome, "lotação", "descrição", id_centro, id_bloco)
-	VALUES ('Auditório de ciências', 200, 'Auditório do bloco 910', 1, 1);
+	nome, "lotação", "descrição", id_centro, id_bloco, tipo_local)
+	VALUES ('Auditório de ciências', 200, 'Auditório do bloco 910', 1, 1, 'Auditório');
 
-INSERT INTO local_auditório(
-	id_local)
+INSERT INTO local_auditório(id_local)
 	VALUES (2);
 
 INSERT INTO local(
-	nome, "lotação", "descrição", id_centro, id_bloco)
-	VALUES ('LEC 1', 40, 'Laboratório de Ciências da Computação 1', 1, 1);
+	nome, "lotação", "descrição", id_centro, id_bloco, tipo_local)
+	VALUES ('LEC 1', 40, 'Laboratório de Ciências da Computação 1', 1, 1, 'Laboratório');
 
-INSERT INTO local_laboratório(
-	id_local)
+INSERT INTO local_laboratório(id_local)
 	VALUES (3);
 
 INSERT INTO local(
-	nome, "lotação", "descrição", id_centro, id_bloco)
-	VALUES ('LEC 2', 20, 'Laboratório de Ciências da Computação 2', 1, 1);
+	nome, "lotação", "descrição", id_centro, id_bloco, tipo_local)
+	VALUES ('LEC 2', 20, 'Laboratório de Ciências da Computação 2', 1, 1, 'Laboratório');
 
 INSERT INTO local_laboratório(
 	id_local)
 	VALUES (4);
 
 INSERT INTO local(
-	nome, "lotação", "descrição", id_centro, id_bloco)
-	VALUES ('Sala 1040', 60, 'Sala número 1040 do bloco 910', 1, 1);
+	nome, "lotação", "descrição", id_centro, id_bloco, tipo_local)
+	VALUES ('Sala 1040', 60, 'Sala número 1040 do bloco 910', 1, 1, 'Sala');
 
-INSERT INTO local_laboratório(
-	id_local)
+INSERT INTO local_laboratório(id_local)
 	VALUES (5);
 
 INSERT INTO local(
-	nome, "lotação", "descrição", id_centro, id_bloco)
-	VALUES ('Biblioteca 1', 20, 'Biblioteca do bloco 910', 1, 1);
+	nome, "lotação", "descrição", id_centro, id_bloco, tipo_local)
+	VALUES ('Biblioteca 1', 20, 'Biblioteca do bloco 910', 1, 1, 'Biblioteca');
 
-INSERT INTO local_biblioteca(
-	id_local)
+INSERT INTO local_biblioteca(id_local)
 	VALUES (6);
 
 
--- Horário
 
 INSERT INTO 
 Horário (horário_início, horário_término, dia_semana)
@@ -234,14 +211,11 @@ Horário (horário_início, horário_término, dia_semana)
 VALUES ('08:00', '10:00', 'Quarta-Feira');
 
 
--- Turma
 
 INSERT INTO 
 Turma(nome, "carga_horária", semestre_ano, estado, vagas, id_disciplina, id_local)
 VALUES ('Turma de Engenharia de Software 1', 64, '2022.2', 'ABERTA', 10, 4, 5);
 
-
--- Turma_Horário
 
 INSERT INTO 
 Turma_Horário(id_turma, id_horário)
@@ -252,7 +226,6 @@ Turma_Horário(id_turma, id_horário)
 VALUES (1, 2);
 
 
--- Turma_Aluno
 
 INSERT INTO
 Turma_Aluno (id_aluno, id_turma)

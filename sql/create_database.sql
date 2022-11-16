@@ -72,6 +72,7 @@ CREATE TABLE Local (
 	nome VARCHAR(80) NOT NULL,
 	lotação SMALLINT NOT NULL,
 	descrição TEXT NOT NULL,
+	tipo_local TEXT NOT NULL,
 
 	PRIMARY KEY(id_local)
 );
@@ -121,7 +122,7 @@ CREATE TABLE Turma(
 	carga_horária SMALLINT NOT NULL,
 	semestre_ano VARCHAR(6) NOT NULL CHECK (semestre_ano ~ '^[0-9]{4}[.][1|2]{1}'),
 	estado VARCHAR(9) NOT NULL CHECK (estado = 'ABERTA' OR estado = 'CONCLUÍDA'),
-	vagas SMALLINT NOT NULL,
+	vagas SMALLINT NOT NULL CHECK (qntd_alunos <= vagas),
 	qntd_alunos SMALLINT DEFAULT 0,
 
 	id_disciplina INTEGER NOT NULL,
@@ -200,7 +201,7 @@ CREATE TABLE Curso(
 	id_curso SERIAL,
 	nome VARCHAR(80) NOT NULL,
 	carga_horaria SMALLINT NOT NULL,
-	id_profs INTEGER UNIQUE NOT NULL,
+	id_profs INTEGER UNIQUE,
 	id_centro INTEGER NOT NULL,
     
 	PRIMARY KEY (id_curso),
@@ -219,86 +220,7 @@ ALTER TABLE Local
 	ADD FOREIGN KEY(id_centro) REFERENCES Centro ON DELETE CASCADE,
 	ADD FOREIGN KEY(id_bloco) REFERENCES Local_bloco ON DELETE CASCADE;
 
--- ALTER TABLE Professor
---     ADD COLUMN id_curso INTEGER NOT NULL,
-
---     ADD FOREIGN KEY (id_curso) REFERENCES Curso;
-
-
--- TRIGGERS 
-
-CREATE OR REPLACE FUNCTION checagem_coord() RETURNS trigger AS 
-$BODY$
-    DECLARE 
-	prof_eh_diretor SMALLINT;
-    BEGIN
-	SELECT COUNT(1) 
-    INTO prof_eh_diretor
-	FROM Centro C
-	WHERE C.id_profs = NEW.id_profs;
+ALTER TABLE Professor
+	ADD COLUMN id_curso INTEGER,
 	
- 	IF (prof_eh_diretor = 1) THEN
-		RAISE EXCEPTION 'professor já é diretor';
-	END IF;
-	RETURN NEW;
-END
-$BODY$ 
-LANGUAGE plpgsql;
-
-CREATE TRIGGER checagem_coord BEFORE INSERT ON Curso
-    FOR EACH ROW EXECUTE FUNCTION checagem_coord();
-
-
-CREATE OR REPLACE FUNCTION checagem_diretor() RETURNS trigger AS 
-$BODY$
-    DECLARE 
-	prof_eh_coord SMALLINT;
-    BEGIN
-	SELECT COUNT(1) 
-    INTO prof_eh_coord
-	FROM Curso C
-	WHERE C.id_profs = NEW.id_profs;
-	
- 	IF (prof_eh_coord = 1) THEN
-		RAISE EXCEPTION 'professor já é coordenador';
-	END IF;
-	RETURN NEW;
-END
-$BODY$ 
-LANGUAGE plpgsql;
-
-CREATE TRIGGER checagem_diretor BEFORE INSERT ON Centro
-    FOR EACH ROW EXECUTE FUNCTION checagem_diretor();
-
-
-CREATE OR REPLACE FUNCTION checagem_matricula_disciplina() RETURNS trigger AS 
-$BODY$
-    DECLARE 
-	aluno_esta_matriculado SMALLINT;
-    BEGIN
-	SELECT COUNT(1) 
-    INTO aluno_esta_matriculado
-    FROM Turma_Aluno TA
-    JOIN Turma T
-    ON T.id_turma = TA.id_turma
-    JOIN Disciplina D
-    ON T.id_disciplina = D.id_disciplina
-    WHERE TA.id_aluno = NEW.id_aluno AND D.id_disciplina = (
-        SELECT D.id_disciplina
-        FROM Disciplina D
-        JOIN Turma T
-        ON D.id_disciplina = T.id_disciplina
-        WHERE T.id_turma = NEW.id_turma
-    );
-
-	
- 	IF (aluno_esta_matriculado = 1) THEN
-		RAISE EXCEPTION 'aluno já está matriculado em turma dessa disciplina';
-	END IF;
-	RETURN NEW;
-END
-$BODY$ 
-LANGUAGE plpgsql;
-
-CREATE TRIGGER checagem_matricula_disciplina BEFORE INSERT ON TURMA_ALUNO
-    FOR EACH ROW EXECUTE FUNCTION checagem_matricula_disciplina();
+	ADD FOREIGN KEY (id_curso) REFERENCES Curso;
