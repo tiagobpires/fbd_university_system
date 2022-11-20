@@ -132,11 +132,11 @@ VALUES ('49342', '2001-10-30', 'philip@alu.ufc.com', 'Masculino', 'Philip Moreir
 
 INSERT INTO 
 Aluno (matricula, data_nasc, email, sexo, nome, id_endereço, id_curso)
-VALUES ('54123', '2002-10-12', 'joana@ufc,br', 'Joana', 'Feminino', 2, 1);
+VALUES ('54123', '2002-10-12', 'joana@ufc,br', 'Feminino',  'Joana', 2, 1);
 
 INSERT INTO 
 Aluno (matricula, data_nasc, email, sexo, nome, id_endereço, id_curso)
-VALUES ('54523', '1998-08-14', 'jason@ufc,br', 'Jason', 'Masculino', 3, 2);
+VALUES ('54523', '1998-08-14', 'jason@ufc,br', 'Masculino',  'Jason', 3, 2);
 
 INSERT INTO 
 Aluno (matricula, data_nasc, email, sexo, nome, id_endereço, id_curso)
@@ -216,6 +216,10 @@ INSERT INTO
 Turma(nome, "carga_horária", semestre_ano, estado, vagas, id_disciplina, id_local)
 VALUES ('Turma de Engenharia de Software 1', 64, '2022.2', 'ABERTA', 10, 4, 5);
 
+INSERT INTO 
+Turma(nome, "carga_horária", semestre_ano, estado, vagas, id_disciplina, id_local)
+VALUES ('Turma de Fundamentos de Bancos de Dados', 64, '2022.2', 'ABERTA', 10, 1, 2);
+
 
 INSERT INTO 
 Turma_Horário(id_turma, id_horário)
@@ -225,6 +229,13 @@ INSERT INTO
 Turma_Horário(id_turma, id_horário)
 VALUES (1, 2);
 
+INSERT INTO 
+Turma_Horário(id_turma, id_horário)
+VALUES (2, 1);
+
+INSERT INTO 
+Turma_Horário(id_turma, id_horário)
+VALUES (2, 2);
 
 
 INSERT INTO
@@ -238,3 +249,61 @@ VALUES (2, 1);
 INSERT INTO
 Turma_Aluno (id_aluno, id_turma)
 VALUES (3, 1);
+
+INSERT INTO
+Turma_Aluno (id_aluno, id_turma)
+VALUES (1, 2);
+
+INSERT INTO
+Turma_Aluno (id_aluno, id_turma)
+VALUES (2, 2);
+
+
+INSERT INTO Avaliação(
+	nota, "tipo_avaliação", id_aluno, id_turma)
+	VALUES (8, 'AP1', 1, 1);
+
+INSERT INTO Avaliação(
+	nota, "tipo_avaliação", id_aluno, id_turma)
+	VALUES (10, 'AP2', 1, 1);
+
+INSERT INTO Avaliação(
+	nota, "tipo_avaliação", id_aluno, id_turma)
+	VALUES (7, 'AP3', 1, 1);
+
+INSERT INTO Avaliação(
+	nota, "tipo_avaliação", id_aluno, id_turma)
+	VALUES (5, 'AP1', 2, 1);
+
+INSERT INTO Avaliação(
+	nota, "tipo_avaliação", id_aluno, id_turma)
+	VALUES (6, 'AP2', 2, 1);
+
+INSERT INTO Avaliação(
+	nota, "tipo_avaliação", id_aluno, id_turma)
+	VALUES (8, 'AP3', 2, 1);
+
+INSERT INTO Avaliação(
+	nota, "tipo_avaliação", id_aluno, id_turma)
+	VALUES (10, 'AP1', 3, 1);
+
+INSERT INTO Avaliação(
+	nota, "tipo_avaliação", id_aluno, id_turma)
+	VALUES (9, 'AP2', 3, 1);
+
+INSERT INTO Avaliação(
+	nota, "tipo_avaliação", id_aluno, id_turma)
+	VALUES (8, 'AP3', 3, 1);
+
+INSERT INTO public."avaliação"(
+	nota, "tipo_avaliação", id_aluno, id_turma)
+	VALUES (10, 'AP1', 1, 2);
+
+INSERT INTO public."avaliação"(
+	nota, "tipo_avaliação", id_aluno, id_turma)
+	VALUES (8.5, 'AP2', 1, 2);
+
+
+UPDATE Turma
+	SET estado='CONCLUÍDA'
+	WHERE id_turma = 1;

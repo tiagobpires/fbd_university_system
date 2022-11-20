@@ -748,3 +748,116 @@ def crud_local(conn, operation):
         cur.close()
     except Exception as error:
         _treat_exception(conn, error)
+
+
+def students_avarage_grade_in_closed_class(conn):
+    """
+    Visualizar média de cada aluno matriculado em uma turma já concluída
+
+    params:
+        - conn: conexão com o banco de dados
+    """
+
+    class_id = int(input("ID da turma: "))
+
+    try:
+        cur = conn.cursor()
+
+        cur.execute("""SELECT estado FROM Turma WHERE id_turma = (%s);""", (class_id,))
+        class_status = cur.fetchone()[0]
+
+        if class_status == "ABERTA":
+            print("Turma deve estar concluída!\n")
+            return
+
+        cur.execute(
+            """
+            SELECT A.id_aluno, A.nome, A.matricula, AVG(AV.nota)
+            FROM Turma T
+            JOIN Turma_Aluno TA
+            ON TA.id_turma = T.id_turma
+            JOIN Aluno A
+            ON TA.id_aluno = A.id_aluno
+            JOIN Avaliação AV
+            ON AV.id_aluno = A.id_aluno AND AV.id_turma = T.id_turma
+            WHERE T.id_turma = 1
+            GROUP BY (A.id_aluno);
+            """
+        )
+
+        response = cur.fetchall()
+
+        columns = ["ID Aluno", "Nome", "Matrícula", "Média"]
+        print(f"\n{len(response)} Resultados encontrados!\n")
+        print(tabulate(response, headers=columns, tablefmt="fancy_grid"))
+
+        cur.close()
+    except Exception as error:
+        _treat_exception(conn, error)
+
+
+def get_local_by_bloc(conn):
+    """
+    Visualizar locais por determinado bloco
+
+    params:
+        - conn: conexão com o banco de dados
+    """
+
+    bloc_id = int(input("ID do bloco: "))
+
+    try:
+        cur = conn.cursor()
+
+        cur.execute(
+            """SELECT id_local, nome FROM local WHERE id_bloco = (%s);""", (bloc_id,)
+        )
+        response = cur.fetchall()
+
+        columns = ["ID Local", "Nome"]
+        print(f"\n{len(response)} Resultados encontrados!\n")
+        print(tabulate(response, headers=columns, tablefmt="fancy_grid"))
+
+        cur.close()
+    except Exception as error:
+        _treat_exception(conn, error)
+
+
+def get_school_record_by_student(conn):
+    """
+    Visualizar histórico escolar por aluno
+
+    params:
+        - conn: conexão com o banco de dados
+    """
+
+    student_id = int(input("ID do aluno: "))
+
+    try:
+        cur = conn.cursor()
+
+        cur.execute(
+            """SELECT D.nome, AVG(AV.nota)
+            FROM Aluno A
+            JOIN Turma_Aluno TA
+            ON TA.id_aluno = A.id_aluno
+            JOIN Turma T
+            ON TA.id_turma = T.id_turma
+            JOIN Avaliação AV
+            ON AV.id_turma = T.id_turma AND AV.id_aluno = A.id_aluno
+            JOIN Disciplina D
+            ON D.id_disciplina = T.id_disciplina
+            WHERE A.id_aluno =  (%s)
+            GROUP BY (D.nome);
+            """,
+            (student_id,),
+        )
+        response = cur.fetchall()
+
+        columns = ["Nome da Disciplina", "Média"]
+        print(f"\n{len(response)} Resultados encontrados!\n")
+        print(tabulate(response, headers=columns, tablefmt="fancy_grid"))
+
+        cur.close()
+    except Exception as error:
+        _treat_exception(conn, error)

@@ -30,7 +30,7 @@ def menu_principal(conn):
             case 2:
                 menu_crud(conn)
             case 3:
-                pass
+                specific_queries_menu(conn)
             case 4:
                 conn.close()
                 print("\nBanco de Dados desconectado!\n")
@@ -138,3 +138,44 @@ def menu_crud(conn):
                 crud_local(conn, operation)
 
         break
+
+
+def specific_queries_menu(conn):
+    """
+    Menu de Consultas Específicas
+
+    params:
+        - conn: conexão com o banco de dados
+    """
+
+    while True:
+        print(
+            dedent(
+                """
+                    -------------- MENU DE CONSULTAS ESPECÍFICAS ---------------
+                    1 - Visualizar a média de cada aluno matriculado em uma turma já concluída 
+                    2 - Verificar todas as turmas de determinado semestre
+                    3 - Quais locais estão em um dado bloco
+                    4 - Visualizar quais turmas estão alocadas em determinado local, mostrando os nomes da turma e da disciplina e os horários de aula
+                    5 - Visualizar as médias de um aluno dada a matrícula (Simular a um histórico escolar)
+                    6 - Voltar
+                """
+            )
+        )
+        option = int(input("Digite qual operação deseja realizar: "))
+
+        match option:
+            case 1:
+                students_avarage_grade_in_closed_class(conn)
+            case 2:
+                pass
+            case 3:
+                get_local_by_bloc(conn)
+            case 4:
+                pass
+            case 5:
+                get_school_record_by_student(conn)
+            case 6:
+                break
+            case _:
+                print("Opção inválida!\n")
