@@ -50,8 +50,8 @@ def reset_database(conn):
                 print("Opção inválida\n")
 
     # Utiliza os arquivos sql para criar o banco de dados e populá-lo
-    with open("sql/create_database.sql", "r", encoding="utf8") as create_database, open(
-        "sql/seed_database.sql", "r", encoding="utf8"
+    with open("create_database.sql", "r", encoding="utf8") as create_database, open(
+        "seed_database.sql", "r", encoding="utf8"
     ) as seed_database:
         try:
             cur = conn.cursor()
@@ -837,7 +837,8 @@ def get_school_record_by_student(conn):
         cur = conn.cursor()
 
         cur.execute(
-            """SELECT D.nome, AVG(AV.nota)
+            """
+            SELECT D.nome, AVG(AV.nota)
             FROM Aluno A
             JOIN Turma_Aluno TA
             ON TA.id_aluno = A.id_aluno

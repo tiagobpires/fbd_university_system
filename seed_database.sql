@@ -125,6 +125,15 @@ INSERT INTO
 Endereço (rua, número, complemento, cep, estado, cidade)
 VALUES  ('Rua Primeiro de Maio', '958', 'Em frente ao supermercado', '60540-455', 'CE', 'Fortaleza');
 
+INSERT INTO 
+Endereço (rua, número, complemento, cep, estado, cidade)
+VALUES  ('Rua Segundo de Maio', '957', 'Em frente ao supermercado', '60540-435', 'CE', 'Fortaleza');
+
+INSERT INTO 
+Endereço (rua, número, complemento, cep, estado, cidade)
+VALUES  ('Rua Terceiro de Maio', '952', 'Em frente ao supermercado', '60540-453', 'CE', 'Fortaleza');
+
+
 
 INSERT INTO 
 Aluno (matricula, data_nasc, email, sexo, nome, id_endereço, id_curso)
@@ -140,11 +149,11 @@ VALUES ('54523', '1998-08-14', 'jason@ufc,br', 'Masculino',  'Jason', 3, 2);
 
 INSERT INTO 
 Aluno (matricula, data_nasc, email, sexo, nome, id_endereço, id_curso)
-VALUES ('64231', '2003-10-02', 'martin@ufc.com', 'Masculino', 'Martin Aeroporto', 2, 1);
+VALUES ('64231', '2003-10-02', 'martin@ufc.com', 'Masculino', 'Martin Aeroporto', 4, 1);
 
 INSERT INTO 
 Aluno (matricula, data_nasc, email, sexo, nome, id_endereço, id_curso)
-VALUES ('52040', '2001-10-22', 'tiagobpires@ufc.br', 'Masculino', 'Tiago Barros Pires', 1, 1);
+VALUES ('52040', '2001-10-22', 'tiagobpires@ufc.br', 'Masculino', 'Tiago Barros Pires', 5, 1);
 
 
 

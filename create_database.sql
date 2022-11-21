@@ -21,7 +21,7 @@ CREATE TABLE Aluno(
 	sexo VARCHAR(9) NOT NULL,
 	nome VARCHAR(80) NOT NULL,
 
-	id_endereço INTEGER NOT NULL,
+	id_endereço INTEGER NOT NULL UNIQUE,
     
 	PRIMARY KEY (id_aluno),
 	FOREIGN KEY (id_endereço) REFERENCES Endereço
